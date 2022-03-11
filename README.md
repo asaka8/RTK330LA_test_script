@@ -1,1 +1,0 @@
-# RTK330LA_test_script

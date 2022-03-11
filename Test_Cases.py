@@ -15,7 +15,7 @@ class Test_Section:
         test_case.test_id = self.total_test_cases
 
     def run_test_section(self):
-        print("\t" + str(self.section_id) + ". " + self.section_name + "\r\n")
+        print(str(self.section_id) + ". " + self.section_name + "\r\n")
         counter = 0
         for test in self.test_cases:
             #self.result = test.run()
@@ -70,7 +70,7 @@ class Test_Case:
 
     def run_test_case(self, id):
         raise NotImplementedError("Subclass must implement abstract method")
-        #print "\t\t" + self.test_case_name + "\r\n"
+        #print("\t\t" + self.test_case_name + "\r\n")
         #if(self.handle != None):
         #    self.result = self.handle(self.cmd, self.param)
 
@@ -81,16 +81,16 @@ class Condition_Check(Test_Case):
     def run_test_case(self, id):
         self.test_id = id
 
-        print("\t\t" + id + self.test_case_name + "\r\n")
+        print(id + self.test_case_name + "\r\n")
 
         if(self.handle != None):
             response = self.handle(self.cmd, self.param)
             self._prepare_result(response)
 
-            test_outcome = "\t\t" + id + self.test_case_name + " Expected: "+ self.result['expected'] + " Actual: "+  self.result['actual']  + "\r\n"
+            test_outcome = id + self.test_case_name + "Expected: "+ self.result['expected'] + " Actual: "+  self.result['actual']  + "\r\n"
 
             result_str = "Passed" + test_outcome if response[0] else "Failed" +  test_outcome
-            #print result_str
+            #print(result_str)
 
 #===========================================#
 
@@ -99,14 +99,16 @@ class Code(Test_Case):
     def run_test_case(self, id):
         self.test_id = id
 
-        print("\t\t" + id + self.test_case_name + "\r\n")
+        print(id + self.test_case_name + "\r\n")
 
         if(self.handle != None):
 
             response = self.handle()
             self._prepare_result(response)
+            
+            print(self.test_case_name, self.result['expected'], self.result['actual'])
 
-            test_outcome = "\t\t" + id + self.test_case_name + " Expected: "+ self.result['expected'] + " Actual: "+  self.result['actual']  + "\r\n"
+            test_outcome = id + self.test_case_name + "Expected: "+ self.result['expected'] + " Actual: "+  self.result['actual']  + "\r\n"
 
             result_str = "Passed" + test_outcome if response[0] else "Failed" +  test_outcome
-            print(result_str)
+            #print(result_str)
